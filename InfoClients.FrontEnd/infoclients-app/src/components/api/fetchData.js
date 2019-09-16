@@ -21,7 +21,15 @@ const FetchData = {
                 'Content-Type': 'application/json'
               }
           });
+  },
+  putItem:function(item,type,id){    
+    return fetch(this.baseUrl+type+id, {
+              method: 'put',
+              headers:{
+                'Content-Type': 'application/json'
+              },
+              body: item
+          });
   }
-  
 }
 export default FetchData;

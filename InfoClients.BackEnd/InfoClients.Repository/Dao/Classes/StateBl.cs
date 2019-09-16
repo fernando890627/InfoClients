@@ -24,5 +24,7 @@ namespace InfoClients.Repository.Dao.Classes
         {
             return _stateRepository.Query(m=>m.CountryId.Equals(countryId));
         }
+
+
     }
 }

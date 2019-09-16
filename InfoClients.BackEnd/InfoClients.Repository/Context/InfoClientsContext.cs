@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using InfoClients.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -112,6 +113,13 @@ namespace InfoClients.Repository
                     .HasForeignKey(d => d.SalePersonId)
                     .HasConstraintName("FK__Visit__SalePerso__1CF15040");
             });
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+            .SelectMany(t => t.GetProperties())
+            .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
+            {
+                property.Relational().ColumnType = "decimal(18, 6)";
+            }
         }
     }
 }

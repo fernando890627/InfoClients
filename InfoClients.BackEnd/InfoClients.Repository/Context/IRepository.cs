@@ -13,6 +13,7 @@ namespace InfoClients.Repository.Context
         T Add(T entity);
         IList<T> Add(IList<T> entity);
         void Update(T entity);
+        IQueryable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, params Expression<Func<T, object>>[] includes);
         IQueryable<T> Query(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null);
         void Delete(int id);
     }

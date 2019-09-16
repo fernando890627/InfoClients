@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InfoClients.Model;
 using InfoClients.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace InfoClients.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("CorsPolicy")]
     public class ClientsController : ControllerBase
     {
         private IClientService _service;
@@ -41,8 +43,7 @@ namespace InfoClients.Api.Controllers
             return Create(value);
             //var result = value;
         }
-
-
+        
         private IActionResult Create(Client client)
         {
             if (!ModelState.IsValid)
@@ -57,8 +58,10 @@ namespace InfoClients.Api.Controllers
 
         // PUT: api/Clients/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Client value)
         {
+            value.ClientId = id;
+            _service.Update(value);
         }
 
         // DELETE: api/ApiWithActions/5

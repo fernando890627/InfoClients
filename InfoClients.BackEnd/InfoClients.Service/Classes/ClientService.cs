@@ -35,5 +35,10 @@ namespace InfoClients.Service.Classes
         {
             return _clientBl.Get(id);
         }
+
+        public void Update(Client value)
+        {
+            _clientBl.Update(value);
+        }
     }
 }

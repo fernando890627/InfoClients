@@ -27,53 +27,55 @@ class ClientList extends React.Component {
     getClients(){
         fetchData.getData('clients','','').then(response =>this.setState({ data:response }) );
     }
-    redirectToClient = () => {
-        const { history } = this.props;
-        if(history) history.push('/newclient');
-       }
-    editClient(clientId){
-        return <Redirect to='/target'/>
-    }
-
     async componentDidMount() {
             this.getClients();
       }
 
   render(){
-      return <MaterialTable
-      title="Clients List"
-      columns={this.state.columns}
-      data={this.state.data}
-      actions={[
-        {
-            icon: 'check',
-            tooltip: 'Log Visit',
-            onClick: (event, rowData) =>  {
-                console.log(event,rowData)
-            }
-            
-        },
-        {
-          icon: 'edit',
-          tooltip: 'Edit CLient',
-          onClick: (event, rowData) => {
-            this.props.history.push({
-                pathname: '/client',
-                state: { clientId: rowData.clientId }
-              })
-            }
-        },        
-        {
-            icon: 'delete',
-            tooltip: 'Delete CLient',
-            onClick: (event, rowData) => {
-                fetchData.deletItem('clients/',rowData.clientId).then((data)=>
-                this.getClients());
-              console.log(event,rowData)
-            }
-        }
-      ]}
-    />
+      return <div className="container">
+          <div className="row">
+              <div className="col-md-12">
+              <MaterialTable
+                    title="Clients List"
+                    columns={this.state.columns}
+                    data={this.state.data}
+                    actions={[
+                        {
+                            icon: 'save',
+                            tooltip: 'Log Visit',
+                            onClick: (event, rowData) =>  {
+                                this.props.history.push({
+                                    pathname: '/client',
+                                    state: { clientId: rowData.clientId,logVisit:1,isDelete:0 }
+                                })
+                            }
+                            
+                        },
+                        {
+                        icon: 'edit',
+                        tooltip: 'Edit CLient',
+                        onClick: (event, rowData) => {
+                            this.props.history.push({
+                                pathname: '/client',
+                                state: { clientId: rowData.clientId,logVisit:0,isDelete:0 }
+                            })
+                            }
+                        },        
+                        {
+                            icon: 'delete',
+                            tooltip: 'Delete CLient',
+                            onClick: (event, rowData) => {
+                                this.props.history.push({
+                                    pathname: '/client',
+                                    state: { clientId: rowData.clientId,logVisit:0,isDelete:1 }
+                                })
+                            }                                
+                        }
+                    ]}
+                    />
+              </div>          
+          </div>
+        </div>
   } 
 }
 

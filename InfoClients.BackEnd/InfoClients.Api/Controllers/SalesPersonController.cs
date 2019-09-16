@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InfoClients.Model;
 using InfoClients.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace InfoClients.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("CorsPolicy")]
     public class SalesPersonController : ControllerBase
     {
         private ISalePersonService _service;
@@ -28,9 +30,9 @@ namespace InfoClients.Api.Controllers
 
         // GET: api/SalesPerson/5
         [HttpGet("{id}", Name = "GetSalePerson")]
-        public string Get(int id)
+        public SalePerson Get(int id)
         {
-            return "value";
+            throw new NotImplementedException();
         }
 
         // POST: api/SalesPerson

@@ -12,7 +12,6 @@ namespace InfoClients.Model
         public string Description { get; set; }
         public int? SalePersonId { get; set; }
         public int? ClientId { get; set; }
-
         public Client Client { get; set; }
         public SalePerson SalePerson { get; set; }
     }

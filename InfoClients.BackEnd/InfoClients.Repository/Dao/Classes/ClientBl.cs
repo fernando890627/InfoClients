@@ -25,6 +25,8 @@ namespace InfoClients.Repository.Dao.Classes
             return _clientRepository.GetAll();
         }
 
+
+
         public void Delete(int id)
         {
             _clientRepository.Delete(id);
@@ -33,6 +35,11 @@ namespace InfoClients.Repository.Dao.Classes
         public Client Get(int id)
         {
             return _clientRepository.Get(id);
+        }
+
+        public void Update(Client value)
+        {
+            _clientRepository.Update(value);
         }
     }
 }

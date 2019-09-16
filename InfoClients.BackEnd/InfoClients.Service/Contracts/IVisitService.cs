@@ -9,5 +9,10 @@ namespace InfoClients.Service
     public interface IVisitService
     {
         IQueryable<Visit> Get();
+
+        Visit Add(Visit objVisit);
+        IQueryable<Visit> GetByCity(int cityId);
+
+        IQueryable<Visit> GetByClient(int clientId);
     }
 }

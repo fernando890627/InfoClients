@@ -5,7 +5,8 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './index.css';
 import App from './components/app/App';
 import Client from './components/client/newclient';
-import Reports from './components/reports/reports';
+import ReportByCity from './components/reports/reportByCity';
+import ReportByClient from './components/reports/reportByClient';
 import ClientActions from './components/client/clientactions';
 import * as serviceWorker from './serviceWorker';
 
@@ -21,7 +22,8 @@ const tempState={
   states:[],
   countries:[],
   cities:[],
-  clientId:0
+  clientId:0,
+  logVisit:0
 }
 
 const routing = (
@@ -33,18 +35,21 @@ const routing = (
           </li>
           <li>
           <Link to={{ pathname: '/client', state: tempState }}>New Client</Link>
-            {/* <Link to={{pathname:"/client",satet:{clientId:0}}}>New Client</Link> */}
           </li>
           <li>
-            <Link to="/reports">Reports</Link>
+            <Link to="/clientactions">Client List</Link>
           </li>
           <li>
-            <Link to="/clientactions">Edit Client</Link>
+            <Link to="/reportbyclient">Report by client</Link>
           </li>
+          <li>
+            <Link to="/reportbycity">Report by city</Link>
+          </li>      
         </ul>
         <Route exact path="/" component={App} />
         <Route path="/client" component={Client} />
-        <Route path="/reports" component={Reports} />
+        <Route path="/reportbyclient" component={ReportByClient} />
+        <Route path="/reportbycity" component={ReportByCity} />
         <Route path="/clientactions" component={ClientActions} />
       </div>
     </Router>

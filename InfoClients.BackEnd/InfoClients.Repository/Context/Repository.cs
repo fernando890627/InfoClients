@@ -36,6 +36,22 @@ namespace InfoClients.Repository.Context
             return entity;
         }
 
+        public IQueryable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = DbSet;
+
+            foreach (Expression<Func<T, object>> include in includes)
+                query = query.Include(include);
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            return query;
+        }
+
         public IQueryable<T> Query(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
             IQueryable<T> query = DbSet;
@@ -61,6 +77,7 @@ namespace InfoClients.Repository.Context
 
         public void Update(T entity)
         {
+            DbSet.Attach(entity);
             Context.Entry(entity).State = EntityState.Modified;
             Save();
         }

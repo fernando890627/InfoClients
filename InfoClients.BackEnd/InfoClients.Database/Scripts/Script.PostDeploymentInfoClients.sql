@@ -9,6 +9,11 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+INSERT INTO [dbo].[SalePerson]([Name]) VALUES('Andres Gutierrez')
+INSERT INTO [dbo].[SalePerson]([Name]) VALUES('Fernando Serna')
+INSERT INTO [dbo].[SalePerson]([Name]) VALUES('Laura Tobon')
+GO
+
 INSERT INTO [dbo].[Country]([Name]) VALUES('United States')
 INSERT INTO [dbo].[Country]([Name]) VALUES('Colombia')
 INSERT INTO [dbo].[Country]([Name]) VALUES('Mexico')

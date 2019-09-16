@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace InfoClients.Api
 {
@@ -37,7 +38,9 @@ namespace InfoClients.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddDbContext<InfoClientsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -58,6 +61,9 @@ namespace InfoClients.Api
 
             services.AddTransient<ICityBl, CityBl>();
             services.AddTransient<ICityService, CityService>();
+
+            services.AddTransient<ISalePersonBl, SalePersonBl>();
+            services.AddTransient<ISalePersonService, SalePersonService>();
             services.AddTransient<IInfoClientsContext, InfoClientsContext>();
 
             services.AddCors(options =>

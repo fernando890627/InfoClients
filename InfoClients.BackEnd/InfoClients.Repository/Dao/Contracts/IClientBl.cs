@@ -14,5 +14,6 @@ namespace InfoClients.Repository.Dao
         void Delete(int id);
 
         Client Get(int id);
+        void Update(Client value);
     }
 }
