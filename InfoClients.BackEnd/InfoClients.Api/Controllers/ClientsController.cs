@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InfoClients.Api.Utils;
 using InfoClients.Model;
 using InfoClients.Service;
 using Microsoft.AspNetCore.Cors;
@@ -26,14 +27,22 @@ namespace InfoClients.Api.Controllers
         [HttpGet]
         public IEnumerable<Client> Get()
         {
-            return _service.Get();
+            List<Client> lstClents = new List<Client>();
+            foreach (var item in _service.Get())
+            {
+                item.Nit = Encripter.Decrypt(item.Nit);
+                lstClents.Add(item);
+            }            
+            return lstClents;
         }
 
         // GET: api/Clients/5
         [HttpGet("{id}", Name = "GetClient")]
         public Client Get(int id)
         {
-            return _service.Get(id);
+            Client objClient= _service.Get(id);
+            objClient.Nit = Encripter.Decrypt(objClient.Nit);
+            return objClient;
         }
 
         // POST: api/Clients
@@ -50,6 +59,7 @@ namespace InfoClients.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+            client.Nit = Encripter.Encrypt(client.Nit);
             var result = _service.Add(client);
             if (result.ClientId != 0)
                 return Ok(result);
@@ -63,6 +73,7 @@ namespace InfoClients.Api.Controllers
             try
             {
                 value.ClientId = id;
+                value.Nit = Encripter.Encrypt(value.Nit);
                 _service.Update(value);
                 return Ok();
             }

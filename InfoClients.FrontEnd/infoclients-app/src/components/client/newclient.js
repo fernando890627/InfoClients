@@ -209,7 +209,6 @@ class Client extends React.Component {
       "StateId":this.state.stateId,
       "CountryId":this.state.countryId
     });
-    toast.success("Success Notification !");
     fetchData.postItem(data,'clients').then(function(response){
       if(response.status==200){
         toast.success("Success!");
@@ -391,7 +390,7 @@ class Client extends React.Component {
               } 
                    
       </div>
-      <ToastContainer position={toast.POSITION.TOP_RIGHT} autoClose={4000}/>
+      <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} autoClose={4000}/>
       
     </div>
     
