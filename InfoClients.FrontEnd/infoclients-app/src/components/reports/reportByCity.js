@@ -5,12 +5,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import MaterialTable from 'material-table';
 import fetchData  from '../api/fetchData';
+import Loader from 'react-loader-spinner';
 // import  history  from ''
 import { Redirect ,Route, Link, BrowserRouter as Router } from 'react-router-dom'
 class ReportByCity extends React.Component { 
     constructor(...props) {
         super(...props);
         this.state = {
+          loading:true,
             countryId:0,
             stateId:0,
             cityId:0,
@@ -32,12 +34,19 @@ class ReportByCity extends React.Component {
       this.handleSelectCountry=this.handleSelectCountry.bind(this);   
     }
     handleSelectCity(event){
+      const compState=this;
+      compState.setState({loading:true})
       this.setState({cityId: event.target.value});
       fetchData.getData('visits/','GetByCity/',event.target.value).then((response)=>{
         this.setState({data:response});
+        compState.setState({loading:false});
+       }).catch(error=>{
+        compState.setState({loading:false});
        });
     }
     handleSelectState(event){
+      const compState=this;
+      compState.setState({loading:true}) 
       var value=event.target.value;
       fetchData.getData('cities/','GetCityByState/',value).then((data) => {
           if(data){
@@ -46,38 +55,52 @@ class ReportByCity extends React.Component {
                 return {label:item.name,value:item.id}
               }),
             })
+            compState.setState({loading:false})
           }        
-      })
-      
+      }).catch(error=>{
+        compState.setState({loading:false});
+       });      
     }
     handleSelectCountry(event){
+      const compState=this;
+      compState.setState({loading:true})
       var value=event.target.value;
       fetchData.getData('states/','GetStateByCountry/',value).then((data) => {
         if(data){
-          this.setState({stateId:null,countryId:value,
+          compState.setState({stateId:null,countryId:value,
             states: data.map(function(item){        
               return {label:item.name,value:item.stateId}
             }),
           })
-        }      
-      });  
+          compState.setState({loading:false})    
+        }         
+      }).catch(error=>{
+        compState.setState({loading:false});
+       });  
     }
 
     loadCountries(){
+      const compState=this;
+      compState.setState({loading:true})
       fetchData.getData('countries','','').then((data) => {
         this.setState({
           countries: data.map(function(item){        
             return {label:item.name,value:item.countryId}
           }),
         })
-      })
+        compState.setState({loading:false})
+      }).catch(error=>{
+        compState.setState({loading:false});
+       });
     }
     async componentDidMount() {
           this.loadCountries(); 
+          this.setState({loading:false})    
     }
 
   render(){
       return <div className="container">
+        <Loader className="spinner" visible={this.state.loading} type="ThreeDots" color="#00BFFF"  height={100}  width={100}  />
             <div className="row">
             <div className="col-md-4 form-group">
               <label>Country</label>

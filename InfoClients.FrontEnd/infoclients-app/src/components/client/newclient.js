@@ -1,8 +1,12 @@
 import React from 'react'
 import fetchData  from '../api/fetchData';
-import Select from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loader from 'react-loader-spinner';
+
 
 const tempState={
+          loading:true,
           nit:'',
           fullName:'',
           address:'',
@@ -27,6 +31,7 @@ class Client extends React.Component {
   constructor(...props) {
       super(...props);
       this.state = {
+          loading:true,
           nit:'',
           fullName:'',
           address:'',
@@ -67,6 +72,7 @@ class Client extends React.Component {
     let data=prevProps.location.state    
     this.loadCountries();
     this.setState(data);
+    this.setState({loading:false});
   } 
 
   loadSalePeople(){
@@ -87,11 +93,11 @@ class Client extends React.Component {
       this.loadSalePeople();
     }
     this.loadCountries();
+    
   } 
 
   loadClientData(clientId){
     fetchData.getData('clients/','',clientId).then((data)=>{
-      debugger;
       if(data){
         this.setState({nit:data.nit,
           fullName:data.fullName,
@@ -148,6 +154,8 @@ class Client extends React.Component {
     this.loadStates(value);
   }
   loadStates(value){
+    const compState=this;
+    compState.setState({loading:true})
     fetchData.getData('states/','GetStateByCountry/',value).then((data) => {
       if(data){
         this.setState({countryId:value,
@@ -155,11 +163,14 @@ class Client extends React.Component {
             return {label:item.name,value:item.stateId}
           }),
         })
+        compState.setState({loading:false});
       }      
     });
   }
 
   loadCities(value){
+    const compState=this;
+    compState.setState({loading:true})
     fetchData.getData('cities/','GetCityByState/',value).then((data) => {
       if(data){
         this.setState({stateId:value,
@@ -167,19 +178,25 @@ class Client extends React.Component {
             return {label:item.name,value:item.id}
             }),
           })
+          compState.setState({loading:false});
         }        
     })
   }
   loadCountries(){
+    const compState=this;
+    compState.setState({loading:true})
     fetchData.getData('countries','','').then((data) => {
       this.setState({
         countries: data.map(function(item){        
           return {label:item.name,value:item.countryId}
         }),
     })
+    compState.setState({loading:false});
   })
   }
   clientSubmit(event) {
+    const compState=this;
+    compState.setState({loading:true})
     var data = JSON.stringify({
       "Nit": this.state.nit,
       "FullName": this.state.fullName,
@@ -192,11 +209,24 @@ class Client extends React.Component {
       "StateId":this.state.stateId,
       "CountryId":this.state.countryId
     });
-    fetchData.postItem(data,'clients').then(response =>console.log(response));
-    this.setState(tempState);  
+    toast.success("Success Notification !");
+    fetchData.postItem(data,'clients').then(function(response){
+      if(response.status==200){
+        toast.success("Success!");
+        compState.setState(tempState);
+        compState.loadCountries();
+      }else{
+        toast.error("Something went wrong!");
+      }
+    }).catch(function(error){
+      toast.success("Somethig went wrong!");
+      compState.setState({loading:false})
+    });
+      
   }
-
   clientModify(event) {
+    const compState=this;
+    compState.setState({loading:true})
     var data = JSON.stringify({
       "Nit": this.state.nit,
       "FullName": this.state.fullName,
@@ -209,25 +239,64 @@ class Client extends React.Component {
       "StateId":this.state.stateId,
       "CountryId":this.state.countryId
     });
-    fetchData.putItem(data,'clients/',this.state.clientId).then(response =>console.log(response));
+    
+    fetchData.putItem(data,'clients/',this.state.clientId).then(function(response){
+      if(response.status==200){
+        toast.success("Success!");
+        compState.setState(tempState);
+        compState.loadCountries();
+      }else{
+        toast.error("Something went wrong!");
+      }
+    })
+    .catch(function(error){
+      toast.success("Somethig went wrong!");
+      compState.setState({loading:false})
+    });
   }
   clientDelete(){
-    fetchData.deletItem('clients/',this.state.clientId);
-    this.setState(tempState);
-    this.loadCountries();                
+    const compState=this;
+    compState.setState({loading:true})   
+    fetchData.deletItem('clients/',this.state.clientId).then(function(response){
+      if(response.status==200){
+        toast.success("Success!");
+        compState.setState(tempState);
+        compState.loadCountries();
+      }else{
+        toast.error("Something went wrong!");
+      }
+      compState.setState({loading:false})     
+    })
+    .catch(function(error){
+      toast.error("Something went wrong!");
+      compState.setState({loading:false})
+    });                    
   }
   logVisit(){
+    const compState=this;
+    compState.setState({loading:true})
     var data = JSON.stringify({      
-      "Description": this.state.visitDescription,
-      "SalePersonId": this.state.salePersonId,
-      "ClientId": this.state.clientId
+      "Description": compState.state.visitDescription,
+      "SalePersonId": compState.state.salePersonId,
+      "ClientId": compState.state.clientId
     });
-    fetchData.postItem(data,'visits').then(response =>console.log(response));
-    this.setState(tempState);
-    this.loadCountries();
+    fetchData.postItem(data,'visits').then(function(response){
+            compState.setState(tempState);
+            compState.loadCountries();
+            compState.setState({loading:false})
+            toast.success("Success Notification !", {
+              position: toast.POSITION.BOTTOM_RIGHT
+            }); 
+
+        })
+        .catch(function(error){
+          toast.error("Something went wrong!")
+          compState.setState({loading:false})
+        });    
   }
   render() {
     return <div className="container"><h1>Client</h1>
+    <Loader className="spinner" visible={this.state.loading} type="ThreeDots" color="#00BFFF"  height={100}  width={100}  />
       { this.state.logVisit ? 
         <div className="row">
           <div className="col-md-6 form-group">
@@ -240,7 +309,7 @@ class Client extends React.Component {
               })
             }
           </select>
-          </div>
+          </div>          
           <div className="col-md-6 form-group">
             <label>Press the button to log visit</label>
             <button type="submit" onClick={this.logVisit} className="btn btn-primary form-control">Log Visit</button>
@@ -319,9 +388,13 @@ class Client extends React.Component {
                   <label>Press the button to delete information</label>
                   <button type="submit" onClick={this.clientDelete} className="btn btn-primary form-control">Delete Client</button>
                 </div>:null
-              }          
+              } 
+                   
       </div>
+      <ToastContainer position={toast.POSITION.TOP_RIGHT} autoClose={4000}/>
+      
     </div>
+    
   }
 }
 export default Client

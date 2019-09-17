@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InfoClients.Model
 {
@@ -7,9 +8,9 @@ namespace InfoClients.Model
     {
         public Client()
         {
-            Visit = new HashSet<Visit>();
+            //Visit = new HashSet<Visit>();
         }
-
+        [Key]
         public int ClientId { get; set; }
         public string Nit { get; set; }
         public string FullName { get; set; }

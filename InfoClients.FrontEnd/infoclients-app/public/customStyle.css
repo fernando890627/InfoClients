@@ -1,0 +1,34 @@
+a:focus {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a {
+    color: #ffffff !important;
+    cursor: pointer !important;
+    font-weight: bold;
+}
+
+.spinner{
+    position: fixed;
+    top: 0px;
+    left: 0;
+    bottom: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    overflow: auto;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+}
+
+.spinner svg{
+    margin: 0 auto;
+}

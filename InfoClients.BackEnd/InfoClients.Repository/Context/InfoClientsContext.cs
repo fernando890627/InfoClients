@@ -48,6 +48,33 @@ namespace InfoClients.Repository
 
             modelBuilder.Entity<Client>(entity =>
             {
+
+                modelBuilder.Entity<Client>().HasMany(b => b.Visit).WithOne(p => p.Client)
+                                .HasForeignKey(p => p.ClientId)
+                                .OnDelete(DeleteBehavior.Cascade);
+
+
+                //modelBuilder.Entity<Client>()
+                //.HasMany<Visit>(g => g.Visit)
+                //.WithOne(v => v.Client)
+                //.IsRequired(true)
+                //.OnDelete(DeleteBehavior.Cascade);
+                //.WithRequired(s => s.CurrentGrade)
+                //.WillCascadeOnDelete();
+                //modelBuilder.Entity<Client>()
+                //.HasOne(s => s.Visit)
+                //.WithMany
+                //.OnDelete(DeleteBehavior.SetNull);
+
+               // modelBuilder.Entity<Client>()
+               //.HasOptional(c => c.)
+               //.WithOptionalDependent()
+               //.WillCascadeOnDelete(true);
+                //modelBuilder.Entity<Visit>()
+                //.HasMany<Child>(c => c.)
+                //.WithOptional(x => x.Parent)
+                //.WillCascadeOnDelete(true);
+
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(150);
@@ -63,8 +90,7 @@ namespace InfoClients.Repository
                 entity.Property(e => e.Phone)
                     .IsRequired()
                     .HasMaxLength(150);
-
-                entity.Property(e => e.VisitsPercentage).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.VisitsPercentage).HasColumnType("decimal(5, 3)");
             });
 
             modelBuilder.Entity<Country>(entity =>
@@ -95,6 +121,14 @@ namespace InfoClients.Repository
 
             modelBuilder.Entity<Visit>(entity =>
             {
+                
+
+                //modelBuilder.Entity<Visit>()
+                //    .HasOne(i => i.Client)
+                //    .WithMany(c => c.Visit)
+                //    .IsRequired()
+                //    .OnDelete(DeleteBehavior.SetNull);
+
                 entity.Property(e => e.Date)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
@@ -113,13 +147,7 @@ namespace InfoClients.Repository
                     .HasForeignKey(d => d.SalePersonId)
                     .HasConstraintName("FK__Visit__SalePerso__1CF15040");
             });
-
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-            .SelectMany(t => t.GetProperties())
-            .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
-            {
-                property.Relational().ColumnType = "decimal(18, 6)";
-            }
+            
         }
     }
 }

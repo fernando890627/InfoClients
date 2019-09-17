@@ -58,17 +58,34 @@ namespace InfoClients.Api.Controllers
 
         // PUT: api/Clients/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Client value)
+        public IActionResult Put(int id, [FromBody] Client value)
         {
-            value.ClientId = id;
-            _service.Update(value);
+            try
+            {
+                value.ClientId = id;
+                _service.Update(value);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong!");
+            }
+            
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _service.Delete(id);
+            try
+            {
+                _service.Delete(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Something went wrong!");
+            }                      
         }
     }
 }

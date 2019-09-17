@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InfoClients.Model
 {
     public partial class Visit
     {
+        [Key]
         public int VisitId { get; set; }
         public DateTime Date { get; set; }
         public int? Net { get; set; }

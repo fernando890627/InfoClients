@@ -28,7 +28,43 @@ const tempState={
 
 const routing = (
     <Router>
-      <div>
+        <div className="container">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+                        <div class="container">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Banshee S.A.</a>
+
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                                    <li class="nav-item">
+                                    <Link to="/" className="nav-link">Home</Link>                                   
+                                    </li>
+                                    <li class="nav-item">
+                                    <Link className="nav-link" to={{ pathname: '/client', state: tempState }}>New Client</Link>
+                                    </li>
+                                    <li class="nav-item">
+                                    <Link className="nav-link" to="/clientactions">Client List</Link>
+                                    </li>
+                                    <li class="nav-item">
+                                    <Link className="nav-link" to="/reportbyclient">Report by client</Link>
+                                    </li>
+                                    <li class="nav-item">
+                                    <Link className="nav-link" to="/reportbycity">Report by city</Link>                                    
+                                    </li>
+                                </ul>                                
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <Route exact path="/" component={App} />
+                                <Route path="/client" component={Client} />
+                                <Route path="/reportbyclient" component={ReportByClient} />
+                                <Route path="/reportbycity" component={ReportByCity} />
+                                <Route path="/clientactions" component={ClientActions} />
+
+      {/* <div>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -51,7 +87,7 @@ const routing = (
         <Route path="/reportbyclient" component={ReportByClient} />
         <Route path="/reportbycity" component={ReportByCity} />
         <Route path="/clientactions" component={ClientActions} />
-      </div>
+      </div> */}
     </Router>
   )
 

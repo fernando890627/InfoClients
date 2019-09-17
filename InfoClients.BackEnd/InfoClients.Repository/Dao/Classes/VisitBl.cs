@@ -33,7 +33,7 @@ namespace InfoClients.Repository.Dao.Classes
         }
 
         public IQueryable<Visit> GetByCity(int cityId)
-        {            
+        {
             return _visitRepository.Get(filter: f => f.Client.CityId.Equals(cityId), orderBy: o => o.OrderByDescending(or => or.Date), includes: m => m.Client);
         }
 

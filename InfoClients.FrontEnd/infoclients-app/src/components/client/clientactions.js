@@ -5,13 +5,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import MaterialTable from 'material-table';
 import fetchData  from '../api/fetchData';
-import Client from './newclient';
+import Loader from 'react-loader-spinner';
 // import  history  from ''
 import { Redirect ,Route, Link, BrowserRouter as Router } from 'react-router-dom'
 class ClientList extends React.Component { 
     constructor(...props) {
         super(...props);
         this.state = {
+            loading:true,
             columns: [
                 { title: 'Id', field: 'clientId' },
                 { title: 'Nit', field: 'nit' },
@@ -25,7 +26,12 @@ class ClientList extends React.Component {
     }
 
     getClients(){
-        fetchData.getData('clients','','').then(response =>this.setState({ data:response }) );
+        const compState=this;
+        fetchData.getData('clients','','').then(function(response){
+            compState.setState({ data:response,loading:false })
+        }).catch(function(){
+            compState.setState({loading:false })
+        })
     }
     async componentDidMount() {
             this.getClients();
@@ -33,6 +39,7 @@ class ClientList extends React.Component {
 
   render(){
       return <div className="container">
+          <Loader className="spinner" visible={this.state.loading} type="ThreeDots" color="#00BFFF"  height={100}  width={100}  />
           <div className="row">
               <div className="col-md-12">
               <MaterialTable

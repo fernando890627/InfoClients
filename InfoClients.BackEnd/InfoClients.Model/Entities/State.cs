@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InfoClients.Model
 {
@@ -10,6 +11,7 @@ namespace InfoClients.Model
             City = new HashSet<City>();
         }
 
+        [Key]
         public int StateId { get; set; }
         public string Name { get; set; }
         public int? CountryId { get; set; }

@@ -5,12 +5,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import MaterialTable from 'material-table';
 import fetchData  from '../api/fetchData';
+import Loader from 'react-loader-spinner';
 // import  history  from ''
 import { Redirect ,Route, Link, BrowserRouter as Router } from 'react-router-dom'
 class ReportByClient extends React.Component { 
     constructor(...props) {
         super(...props);
         this.state = {
+          loading:true,
             nit:'',
             creditLimit:0,
             availableCredit:0,
@@ -36,18 +38,23 @@ class ReportByClient extends React.Component {
     }    
 
     loadClientData(clientId){
+        const compState=this;
+        compState.setState({loading:true})
       fetchData.getData('clients/','',clientId).then((data)=>{
         if(data){
-          this.setState({nit:data.nit,
+          compState.setState({nit:data.nit,
             fullName:data.fullName,       
             creditLimit:data.creditLimit,
             availableCredit:data.availableCredit          
           })
-          fetchData.getData('visits/','GetByClient/',this.state.clientId).then((response)=>{
-            this.setState({data:response});
-           });
+          fetchData.getData('visits/','GetByClient/',compState.state.clientId).then((response)=>{
+            compState.setState({data:response,loading:false});
+           }).catch(function(){
+            compState.setState({loading:false});
+           })           
         }
-        console.log(data);
+      }).catch(function(){
+        compState.setState({loading:false});
       });
       
     }      
@@ -55,21 +62,25 @@ class ReportByClient extends React.Component {
     
 
     loadClients(){
+      const compState=this;
       fetchData.getData('clients','','').then((data) => {
-        this.setState({
+        compState.setState({
           clients: data.map(function(item){        
             return {label:item.fullName,value:item.clientId}
-          }),
+          }),loading:false
         })
+      }).catch(function(){
+        compState.setState({loading:false});
       })
     }
     
     async componentDidMount() {
-          this.loadClients(); 
+          this.loadClients();
     }
 
   render(){
       return <div className="container">
+        <Loader className="spinner" visible={this.state.loading} type="ThreeDots" color="#00BFFF"  height={100}  width={100}  />
             <div className="row">
             <div className="col-md-6 form-group">
               <label>Clients</label>

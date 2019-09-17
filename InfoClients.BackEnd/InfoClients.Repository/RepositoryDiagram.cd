@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="InfoClients.Repository.Dao.Classes.CityBl" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAACACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Classes\CityBl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.Dao.Classes.ClientBl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAIAAAAAABAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Classes\ClientBl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.Dao.Classes.CountryBl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Classes\CountryBl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.Dao.Classes.SalePersonBl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Classes\SalePersonBl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.Dao.Classes.StateBl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAYAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Classes\StateBl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.Dao.Classes.VisitBl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAQQAAABAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Dao\Classes\VisitBl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.InfoClientsContext" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABQAAAAQIAAAAAAAAEAIAAAAAAAAABAAAAAQ=</HashCode>
+      <FileName>Context\InfoClientsContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InfoClients.Repository.Context.Repository&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAIAAAgAAAABAAAAAAAAAAAEIAAgAAgAAAAAAAAA=</HashCode>
+      <FileName>Context\Repository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="InfoClients.Repository.Dao.ICityBl">
+    <Position X="2" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Contracts\ICityBl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.Dao.IClientBl" Collapsed="true">
+    <Position X="3.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAABAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Contracts\IClientBl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.Dao.ICountryBl" Collapsed="true">
+    <Position X="5.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Contracts\ICountryBl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.Dao.ISalePersonBl" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Contracts\ISalePersonBl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.Dao.IStateBl" Collapsed="true">
+    <Position X="2" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Contracts\IStateBl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.Dao.IVisitBl" Collapsed="true">
+    <Position X="3.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dao\Contracts\IVisitBl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.IInfoClientsContext" Collapsed="true">
+    <Position X="7.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQIAAAAAAAAAAIAAAAAAAAABAAAAAQ=</HashCode>
+      <FileName>Context\IInfoClientsContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InfoClients.Repository.Context.IRepository&lt;T&gt;" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAABAAAAAAAAAAAEAAAgAAgAAAAAAAAA=</HashCode>
+      <FileName>Context\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
