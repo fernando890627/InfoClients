@@ -77,11 +77,15 @@ class Client extends React.Component {
 
   loadSalePeople(){
       fetchData.getData('salesperson','','').then((data) => {
-        this.setState({
-          salePersons: data.map(function(item){        
-            return {label:item.name,value:item.salePersonId}
-          }),
-      })
+        if(data){
+          this.setState({
+            salePersons: data.map(function(item){        
+              return {label:item.name,value:item.salePersonId}
+            })
+          })
+        }else{
+          toast.error("Something went wrong!");
+        }      
     })
   }
 
@@ -111,8 +115,10 @@ class Client extends React.Component {
         })
         this.loadStates(this.state.countryId);
         this.loadCities(this.state.stateId);
-      }      
-    }
+      }else{
+        toast.error("Something went wrong!");
+      }           
+      }
     )
   }
   handleDescription(event){
@@ -164,7 +170,7 @@ class Client extends React.Component {
           }),
         })
         compState.setState({loading:false});
-      }      
+      }          
     });
   }
 
@@ -186,12 +192,16 @@ class Client extends React.Component {
     const compState=this;
     compState.setState({loading:true})
     fetchData.getData('countries','','').then((data) => {
-      this.setState({
-        countries: data.map(function(item){        
-          return {label:item.name,value:item.countryId}
-        }),
-    })
-    compState.setState({loading:false});
+      if(data){
+        this.setState({
+          countries: data.map(function(item){        
+            return {label:item.name,value:item.countryId}
+          }),
+      })
+      compState.setState({loading:false});
+      }else{
+        toast.error("Something went wrong!");
+      }    
   })
   }
   clientSubmit(event) {
@@ -390,8 +400,7 @@ class Client extends React.Component {
               } 
                    
       </div>
-      <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} autoClose={4000}/>
-      
+      <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} autoClose={4000}/>      
     </div>
     
   }

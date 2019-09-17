@@ -6,6 +6,7 @@ using InfoClients.Model;
 using InfoClients.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace InfoClients.Api.Controllers
 {
@@ -14,7 +15,7 @@ namespace InfoClients.Api.Controllers
     public class CountriesController : ControllerBase
     {
         private ICountryService _service;
-
+        ILogger logger = LogManager.GetCurrentClassLogger();
         public CountriesController(ICountryService service)
         {
             _service = service;
@@ -22,9 +23,18 @@ namespace InfoClients.Api.Controllers
 
         // GET: api/Countries
         [HttpGet]
-        public IEnumerable<Country> Get()
+        public IActionResult Get()
         {
-            return _service.Get();
+            try
+            {
+                return Ok(_service.Get());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         // GET: api/Countries/5

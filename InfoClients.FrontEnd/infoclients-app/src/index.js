@@ -62,32 +62,7 @@ const routing = (
                                 <Route path="/client" component={Client} />
                                 <Route path="/reportbyclient" component={ReportByClient} />
                                 <Route path="/reportbycity" component={ReportByCity} />
-                                <Route path="/clientactions" component={ClientActions} />
-
-      {/* <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-          <Link to={{ pathname: '/client', state: tempState }}>New Client</Link>
-          </li>
-          <li>
-            <Link to="/clientactions">Client List</Link>
-          </li>
-          <li>
-            <Link to="/reportbyclient">Report by client</Link>
-          </li>
-          <li>
-            <Link to="/reportbycity">Report by city</Link>
-          </li>      
-        </ul>
-        <Route exact path="/" component={App} />
-        <Route path="/client" component={Client} />
-        <Route path="/reportbyclient" component={ReportByClient} />
-        <Route path="/reportbycity" component={ReportByCity} />
-        <Route path="/clientactions" component={ClientActions} />
-      </div> */}
+                                <Route path="/clientactions" component={ClientActions} />      
     </Router>
   )
 

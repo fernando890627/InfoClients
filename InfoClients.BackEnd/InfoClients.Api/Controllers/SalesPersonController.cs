@@ -7,6 +7,7 @@ using InfoClients.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace InfoClients.Api.Controllers
 {
@@ -15,6 +16,7 @@ namespace InfoClients.Api.Controllers
     [EnableCors("CorsPolicy")]
     public class SalesPersonController : ControllerBase
     {
+        ILogger logger = LogManager.GetCurrentClassLogger();
         private ISalePersonService _service;
 
         public SalesPersonController(ISalePersonService service)
@@ -23,16 +25,35 @@ namespace InfoClients.Api.Controllers
         }
         // GET: api/SalesPerson
         [HttpGet]
-        public IEnumerable<SalePerson> Get()
+        public IActionResult Get()
         {
-            return _service.Get();
+            try
+            {
+                return Ok(_service.Get());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         // GET: api/SalesPerson/5
         [HttpGet("{id}", Name = "GetSalePerson")]
-        public SalePerson Get(int id)
+        public IActionResult Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+                
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message+" - "+ex.StackTrace);
+                return BadRequest();
+            }
+           
         }
 
         // POST: api/SalesPerson

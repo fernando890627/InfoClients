@@ -7,6 +7,7 @@ using InfoClients.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace InfoClients.Api.Controllers
 {
@@ -16,7 +17,7 @@ namespace InfoClients.Api.Controllers
     public class StatesController : ControllerBase
     {
         private IStateService _service;
-
+        ILogger logger = LogManager.GetCurrentClassLogger();
         public StatesController(IStateService service)
         {
             _service = service;
@@ -24,9 +25,19 @@ namespace InfoClients.Api.Controllers
 
         // GET: api/States
         [HttpGet]
-        public IEnumerable<State> Get()
+        public IActionResult Get()
         {
-            return _service.Get();
+            try
+            {
+                return Ok(_service.Get());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
+
         }
 
         // GET: api/States/5
@@ -37,9 +48,17 @@ namespace InfoClients.Api.Controllers
         }
 
         [HttpGet("GetStateByCountry/{id}")]        
-        public IEnumerable<State> GetByCountry(int id)
+        public IActionResult GetByCountry(int id)
         {
-            return _service.GetByCountry(id);
+            try
+            {
+                return Ok(_service.GetByCountry(id));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
         }
 
         // POST: api/States

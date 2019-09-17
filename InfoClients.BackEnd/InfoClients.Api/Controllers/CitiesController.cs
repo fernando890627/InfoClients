@@ -7,6 +7,7 @@ using InfoClients.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace InfoClients.Api.Controllers
 {
@@ -15,9 +16,8 @@ namespace InfoClients.Api.Controllers
     [EnableCors("CorsPolicy")]
     public class CitiesController : ControllerBase
     {
-
+        ILogger logger = LogManager.GetCurrentClassLogger();
         private ICityService _service;
-
         public CitiesController(ICityService service)
         {
             _service = service;
@@ -25,9 +25,18 @@ namespace InfoClients.Api.Controllers
 
         // GET: api/Cities
         [HttpGet]
-        public IEnumerable<City> Get()
+        public IActionResult Get()
         {
-            return _service.Get();
+            try
+            {
+                return Ok(_service.Get());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         // GET: api/Cities/5
@@ -39,9 +48,18 @@ namespace InfoClients.Api.Controllers
 
         //[HttpGet("{id}", Name = "GetCityByState")]
         [HttpGet("GetCityByState/{id}")]        
-        public IQueryable<City> GetBySatate(int id)
+        public IActionResult GetBySatate(int id)
         {
-            return _service.GetByState(id);
+            try
+            {
+                return Ok(_service.GetByState(id));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+            
         }
         
         // POST: api/Cities

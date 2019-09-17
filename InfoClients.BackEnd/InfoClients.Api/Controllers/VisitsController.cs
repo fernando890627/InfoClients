@@ -7,6 +7,7 @@ using InfoClients.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace InfoClients.Api.Controllers
 {
@@ -16,7 +17,7 @@ namespace InfoClients.Api.Controllers
     public class VisitsController : ControllerBase
     {
         private IVisitService _service;
-
+        ILogger logger = LogManager.GetCurrentClassLogger();
         public VisitsController(IVisitService service)
         {
             _service = service;
@@ -24,9 +25,17 @@ namespace InfoClients.Api.Controllers
 
         // GET: api/Visits
         [HttpGet]
-        public IEnumerable<Visit> Get()
+        public IActionResult Get()
         {
-            return _service.Get();
+            try
+            {
+                return Ok(_service.Get());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
         }
 
         // GET: api/Visits/5
@@ -37,32 +46,48 @@ namespace InfoClients.Api.Controllers
         }
 
         [HttpGet("GetByClient/{id}")]
-        public IEnumerable<Visit> GetByClient(int id)
-        {
-            return _service.GetByClient(id);
-        }
-
-        [HttpGet("GetByCity/{id}")]
-        public IEnumerable<Visit> GetByCity(int id)
+        public IActionResult GetByClient(int id)
         {
             try
             {
-                var test= _service.GetByCity(id);
-                return test;
+                return Ok(_service.GetByClient(id));
             }
             catch (Exception ex)
-            {                
-                string e = ex.Message;
-                return new List<Visit>();
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
             }
-            
+        }
+
+        [HttpGet("GetByCity/{id}")]
+        public IActionResult GetByCity(int id)
+        {
+            try
+            {
+                return Ok(_service.GetByCity(id));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         // POST: api/Visits
         [HttpPost]
         public IActionResult Post([FromBody] Visit value)
         {
-            return Create(value);
+            try
+            {
+                return Ok(Create(value));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         private IActionResult Create(Visit visit)

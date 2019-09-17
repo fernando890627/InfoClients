@@ -8,6 +8,7 @@ using InfoClients.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace InfoClients.Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace InfoClients.Api.Controllers
     public class ClientsController : ControllerBase
     {
         private IClientService _service;
-
+        ILogger logger = LogManager.GetCurrentClassLogger();
         public ClientsController(IClientService service)
         {
             _service = service;
@@ -25,31 +26,58 @@ namespace InfoClients.Api.Controllers
 
         // GET: api/Clients
         [HttpGet]
-        public IEnumerable<Client> Get()
+        public IActionResult Get()
         {
-            List<Client> lstClents = new List<Client>();
-            foreach (var item in _service.Get())
+            try
             {
-                item.Nit = Encripter.Decrypt(item.Nit);
-                lstClents.Add(item);
-            }            
-            return lstClents;
+                List<Client> lstClents = new List<Client>();
+                foreach (var item in _service.Get())
+                {
+                    item.Nit = Encripter.Decrypt(item.Nit);
+                    lstClents.Add(item);
+                }
+                return Ok(lstClents);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         // GET: api/Clients/5
         [HttpGet("{id}", Name = "GetClient")]
-        public Client Get(int id)
+        public IActionResult Get(int id)
         {
-            Client objClient= _service.Get(id);
-            objClient.Nit = Encripter.Decrypt(objClient.Nit);
-            return objClient;
+            try
+            {
+                Client objClient = _service.Get(id);
+                objClient.Nit = Encripter.Decrypt(objClient.Nit);
+                return Ok(objClient);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
         }
 
         // POST: api/Clients
         [HttpPost]
         public IActionResult Post([FromBody] Client value)
         {
-            return Create(value);
+            try
+            {
+                return Ok(Create(value));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
+
             //var result = value;
         }
         
@@ -79,9 +107,10 @@ namespace InfoClients.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Something went wrong!");
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
             }
-            
+
         }
 
         // DELETE: api/ApiWithActions/5
@@ -93,10 +122,11 @@ namespace InfoClients.Api.Controllers
                 _service.Delete(id);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest("Something went wrong!");
-            }                      
+                logger.Error(ex.Message + " - " + ex.StackTrace);
+                return BadRequest();
+            }
         }
     }
 }
